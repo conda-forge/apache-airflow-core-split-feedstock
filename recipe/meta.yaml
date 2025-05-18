@@ -338,7 +338,8 @@ outputs:
       run:
         - python >={{ python_min }},<{{ python_over }}
         - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
-        - opentelemetry-exporter-prometheus >=0.47b0
+        # going with more recent versions because of incorrect deps in older versions
+        - opentelemetry-exporter-prometheus >=0.51b0
 
     test:
       imports:
