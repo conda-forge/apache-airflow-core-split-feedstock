@@ -11,7 +11,7 @@ source:
   sha256: e1e4204fdba3d13810784b70d907e18d9ed875f52bfebd7fe2653625e0fb0e85
 
 build:
-  number: 0
+  number: 1
   noarch: python
 
 outputs:
@@ -338,7 +338,8 @@ outputs:
       run:
         - python >={{ python_min }},<{{ python_over }}
         - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
-        - opentelemetry-exporter-prometheus >=0.47b0
+        # going with more recent versions because of incorrect deps in older versions
+        - opentelemetry-exporter-prometheus >=0.51b0
 
     test:
       imports:
@@ -466,6 +467,42 @@ outputs:
         - python >={{ python_min }},<{{ python_over }}
         - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
         - uv >=0.6.13
+
+    test:
+      imports:
+        - airflow
+      commands:
+        - pip check
+      requires:
+        - python {{ python_min }}
+        - pip
+
+  - name: {{ name }}-with-all
+    build:
+      noarch: python
+
+    requirements:
+      host:
+        - python {{ python_min }}
+      run:
+        - python >={{ python_min }},<{{ python_over }}
+        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
+        - {{ name }}-with-aiobotocore
+        - {{ name }}-with-apache-atlas
+        - {{ name }}-with-apache-webhdfs
+        - {{ name }}-with-cloudpickle
+        - {{ name }}-with-github-enterprise
+        - {{ name }}-with-google-auth
+        - {{ name }}-with-graphviz
+        - {{ name }}-with-kerberos
+        - {{ name }}-with-ldap
+        - {{ name }}-with-otel
+        - {{ name }}-with-pandas
+        - {{ name }}-with-rabbitmq
+        - {{ name }}-with-s3fs
+        - {{ name }}-with-sentry
+        - {{ name }}-with-statsd
+        - {{ name }}-with-uv
 
     test:
       imports:
