@@ -253,22 +253,11 @@ outputs:
       run:
         - python >={{ python_min }},<{{ python_over }}
         - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
-        - {{ name }}-with-aiobotocore
-        - {{ name }}-with-apache-atlas
-        - {{ name }}-with-apache-webhdfs
-        - {{ name }}-with-cloudpickle
-        - {{ name }}-with-github-enterprise
-        - {{ name }}-with-google-auth
         - {{ name }}-with-graphviz
         - {{ name }}-with-kerberos
-        - {{ name }}-with-ldap
         - {{ name }}-with-otel
-        - {{ name }}-with-pandas
-        - {{ name }}-with-rabbitmq
-        - {{ name }}-with-s3fs
         - {{ name }}-with-sentry
         - {{ name }}-with-statsd
-        - {{ name }}-with-uv
 
     test:
       imports:
