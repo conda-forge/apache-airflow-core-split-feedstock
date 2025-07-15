@@ -63,7 +63,8 @@ outputs:
         - jinja2 >=3.1.5
         - jsonschema >=4.19.1
         - lazy-object-proxy >=1.2.0
-        - libcst >=1.1.0
+        # more restrictive to stay noarch: python
+        - libcst >=1.1.0,!=1.8.1
         - linkify-it-py >=2.0.0
         - lockfile >=0.12.2
         - methodtools >=0.4.7
@@ -99,7 +100,7 @@ outputs:
         - typing-extensions !=4.14.0
         - universal-pathlib >=0.2.2,!=0.2.4
         - uuid6 >=2024.7.10
-        - apache-airflow-task-sdk <1.1.0,>=1.0.2
+        - apache-airflow-task-sdk <1.1.0,>=1.0.3
         - apache-airflow-providers-common-compat >=1.6.0
         - apache-airflow-providers-common-io >=1.5.3
         - apache-airflow-providers-common-sql >=1.26.0
