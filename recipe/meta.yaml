@@ -1,5 +1,5 @@
 {% set name = "apache-airflow-core" %}
-{% set version = "3.1.0" %}
+{% set version = "3.1.1" %}
 {% set python_over = "3.14" %}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/apache_airflow_core-{{ version }}.tar.gz
-  sha256: d98f0c1c9226041e23098cd27c7f0b215e3b59984070d9c339aa7f34504107fd
+  sha256: e2733c8046402820b8fc0d1b1a7828298226165bdcd6514c2eed0c2d37826892
 
 build:
   number: 0
