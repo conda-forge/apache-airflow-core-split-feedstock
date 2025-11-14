@@ -1,5 +1,5 @@
 {% set name = "apache-airflow-core" %}
-{% set version = "3.1.2" %}
+{% set version = "3.1.3" %}
 {% set python_over = "3.14" %}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/apache_airflow_core-{{ version }}.tar.gz
-  sha256: fe3985bb40f78f5a09498755fc80ee7bc916cd019560f9d7097c2ef3886db229
+  sha256: e53d46ebfd8bc5d20309079b7904b936377f01811bd1f934177e2195eff8904c
 
 build:
   number: 0
@@ -50,6 +50,7 @@ outputs:
         - cryptography >=41.0.0
         - deprecated >=1.2.13
         - dill >=0.2.2
+        - uvicorn >=0.37.0
         # conda-forge package includes fastapi[standard]
         - fastapi >=0.116.0,<0.118.0
         - starlette >=0.45.0
@@ -99,7 +100,7 @@ outputs:
         - typing-extensions >=4.14.1
         - universal-pathlib >=0.2.6,<0.3.0
         - uuid6 >=2024.7.10
-        - apache-airflow-task-sdk <1.2.0,>=1.1.1
+        - apache-airflow-task-sdk <1.2.0,>=1.1.3
         - apache-airflow-providers-common-compat >=1.7.4
         - apache-airflow-providers-common-io >=1.6.3
         - apache-airflow-providers-common-sql >=1.28.1
@@ -291,23 +292,6 @@ about:
   license_file:
     - LICENSE
     - NOTICE
-    - 3rd-party-licenses/LICENSE-reproducible.txt
-    - 3rd-party-licenses/LICENSE-dagre-d3.txt
-    - 3rd-party-licenses/LICENSE-elasticmock.txt
-    - 3rd-party-licenses/LICENSE-eonasdan-bootstrap-datetimepicker.txt
-    - 3rd-party-licenses/LICENSE-flask-kerberos.txt
-    - 3rd-party-licenses/LICENSE-d3-shape.txt
-    - 3rd-party-licenses/LICENSE-pytest-capture-warnings.txt
-    - 3rd-party-licenses/LICENSE-bootstrap3-typeahead.txt
-    - 3rd-party-licenses/LICENSE-datatables.txt
-    - 3rd-party-licenses/LICENSE-hue.txt
-    - 3rd-party-licenses/LICENSE-d3js.txt
-    - 3rd-party-licenses/LICENSE-jqclock.txt
-    - 3rd-party-licenses/LICENSE-moment.txt
-    - 3rd-party-licenses/LICENSE-d3-tip.txt
-    - 3rd-party-licenses/LICENSE-bootstrap.txt
-    - 3rd-party-licenses/LICENSE-jquery.txt
-    - 3rd-party-licenses/LICENSE-normalize.txt
   doc_url: http://pythonhosted.org/airflow/profiling.html
   dev_url: https://github.com/apache/airflow
 
