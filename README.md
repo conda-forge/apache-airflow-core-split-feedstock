@@ -1,9 +1,9 @@
-About apache-airflow-core-split-feedstock
-=========================================
+About apache-airflow-core-feedstock
+===================================
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/apache-airflow-core-split-feedstock/blob/main/LICENSE.txt)
 
-Home: http://airflow.apache.org
+Home: http://airflow.apache.org/
 
 Package license: MIT AND BSD-3-Clause AND BSD-2-Clause AND Apache-2.0
 
@@ -40,10 +40,10 @@ Current release info
 | [![Conda Recipe](https://img.shields.io/badge/recipe-apache--airflow--core--with--sentry-green.svg)](https://anaconda.org/conda-forge/apache-airflow-core-with-sentry) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/apache-airflow-core-with-sentry.svg)](https://anaconda.org/conda-forge/apache-airflow-core-with-sentry) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/apache-airflow-core-with-sentry.svg)](https://anaconda.org/conda-forge/apache-airflow-core-with-sentry) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/apache-airflow-core-with-sentry.svg)](https://anaconda.org/conda-forge/apache-airflow-core-with-sentry) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-apache--airflow--core--with--statsd-green.svg)](https://anaconda.org/conda-forge/apache-airflow-core-with-statsd) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/apache-airflow-core-with-statsd.svg)](https://anaconda.org/conda-forge/apache-airflow-core-with-statsd) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/apache-airflow-core-with-statsd.svg)](https://anaconda.org/conda-forge/apache-airflow-core-with-statsd) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/apache-airflow-core-with-statsd.svg)](https://anaconda.org/conda-forge/apache-airflow-core-with-statsd) |
 
-Installing apache-airflow-core-split
-====================================
+Installing apache-airflow-core
+==============================
 
-Installing `apache-airflow-core-split` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `apache-airflow-core` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
@@ -129,17 +129,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating apache-airflow-core-split-feedstock
-============================================
+Updating apache-airflow-core-feedstock
+======================================
 
-If you would like to improve the apache-airflow-core-split recipe or build a new
+If you would like to improve the apache-airflow-core recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/apache-airflow-core-split-feedstock are
+Note that all branches in the conda-forge/apache-airflow-core-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks, and branches in the main repository should only be used to
 build distinct package versions.

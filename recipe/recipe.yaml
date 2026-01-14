@@ -1,30 +1,35 @@
-{% set name = "apache-airflow-core" %}
-{% set version = "3.1.5" %}
-{% set python_over = "3.14" %}
+schema_version: 1
 
-package:
-  name: {{ name|lower }}-split
-  version: {{ version }}
+context:
+  name: apache-airflow-core
+  version: 3.1.6
+  python_over: 3.14
+
+recipe:
+  name: ${{ name|lower }}-split
+  version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/apache_airflow_core-{{ version }}.tar.gz
-  sha256: 4a2dfba1ff87b923e3b0e9faa7b73d00e2ba93ad1e7e109673c9b7414e96838e
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/apache_airflow_core-${{ version }}.tar.gz
+  sha256: 442c6e2818f0905dcb087a9257c75804ec5a4216fb6330a6e5550c62515bacf3
 
 build:
   number: 0
   noarch: python
 
 outputs:
-  - name: {{ name }}
-    script: install_airflow_core.sh
+  - package:
+      name: ${{ name }}
     build:
-      entry_points:
-        - airflow = airflow.__main__:main
       noarch: python
-
+      python:
+        entry_points:
+          - airflow = airflow.__main__:main
+      script:
+        file: install_airflow_core.sh
     requirements:
       host:
-        - python {{ python_min }}
+        - python ${{ python_min }}.*
         - gitpython ==3.1.45
         - gitdb ==4.0.12
         - hatchling ==1.27.0
@@ -36,9 +41,9 @@ outputs:
         - trove-classifiers ==2025.9.11.17
         - pip
       run:
-        - python >={{ python_min }},<{{ python_over }}
+        - python >=${{ python_min }},<${{ python_over }}
         - a2wsgi >=1.10.8
-        - aiosqlite >=0.20.0
+        - aiosqlite >=0.20.0,<0.22.0
         - alembic >=1.13.1,<2.0
         - argcomplete >=1.10
         - asgiref >=2.3.0
@@ -68,7 +73,7 @@ outputs:
         - natsort >=8.4.0
         - opentelemetry-api >=1.27.0
         - opentelemetry-exporter-otlp >=1.27.0
-        # leaving out opentelemetry-proto as this seems to be present 
+        # leaving out opentelemetry-proto as this seems to be present
         # for a pip issue that shouldn't apply to conda
         - packaging >=25.0
         - pathspec >=0.9.0
@@ -87,10 +92,8 @@ outputs:
         - rich >=13.6.0
         - setproctitle >=1.3.3
         - sqlalchemy >=1.4.49
-
         # sqlalchemy[asyncio]
         - greenlet !=0.4.17
-
         - sqlalchemy-jsonfield >=1.0
         - sqlalchemy-utils >=0.41.2
         - svcs >=25.1.0
@@ -100,8 +103,8 @@ outputs:
         - typing-extensions >=4.14.1
         - universal-pathlib >=0.2.6,<0.3.0
         - uuid6 >=2024.7.10
-        # this constraint is stupid, but I'm following upstream...
-        - apache-airflow-task-sdk <1.2.0,==1.1.5
+        # this constraint is strange, but I'm following upstream...
+        - apache-airflow-task-sdk <1.2.0,==1.1.6
         - apache-airflow-providers-common-compat >=1.7.4
         - apache-airflow-providers-common-io >=1.6.3
         - apache-airflow-providers-common-sql >=1.28.1
@@ -110,191 +113,163 @@ outputs:
         - msgspec >=0.19.0
         - pygtrie >=2.5.0
         - structlog >=25.4.0
-
-    test:
-      imports:
-        - airflow
-      commands:
-        - pip check
-        - airflow --help
-      requires:
-        - python {{ python_min }}
-        - pip
-        # in https://github.com/apache/airflow/blob/{{ version }}/pyproject.toml
-        # but needed for airflow entry-point to work
-        - natsort >=8.4.0
-
-  - name: {{ name }}-with-async
+    tests:
+      - python:
+          imports:
+            - airflow
+          pip_check: true
+          python_version: ${{ python_min }}.*
+      - requirements:
+          run:
+            - python ${{ python_min }}.*
+            - pip
+            - natsort >=8.4.0
+        script:
+          - airflow --help
+  - package:
+      name: ${{ name }}-with-async
     build:
       noarch: python
-
     requirements:
       host:
-        - python {{ python_min }}
+        - python ${{ python_min }}.*
       run:
-        - python >={{ python_min }},<{{ python_over }}
-        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
+        - python >=${{ python_min }},<${{ python_over }}
+        - ${{ pin_subpackage(name, upper_bound='x.x.x.x.x.x') }}
         - eventlet >=0.37.0
         - gevent >=25.4.1
         - greenlet >=3.1.0
         - greenback >=1.2.1
-
-    test:
-      imports:
-        - airflow
-      commands:
-        - pip check
-      requires:
-        - python {{ python_min }}
-        - pip
-
-  - name: {{ name }}-with-graphviz
+    tests:
+      - python:
+          imports:
+            - airflow
+          pip_check: true
+          python_version: ${{ python_min }}.*
+  - package:
+      name: ${{ name }}-with-graphviz
     build:
       noarch: python
-
     requirements:
       host:
-        - python {{ python_min }}
+        - python ${{ python_min }}.*
       run:
-        - python >={{ python_min }},<{{ python_over }}
-        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
+        - python >=${{ python_min }},<${{ python_over }}
+        - ${{ pin_subpackage(name, upper_bound='x.x.x.x.x.x') }}
         - python-graphviz >=0.20
-
-    test:
-      imports:
-        - airflow
-      commands:
-        - pip check
-      requires:
-        - python {{ python_min }}
-        - pip
-
-  - name: {{ name }}-with-kerberos
+    tests:
+      - python:
+          imports:
+            - airflow
+          pip_check: true
+          python_version: ${{ python_min }}.*
+  - package:
+      name: ${{ name }}-with-kerberos
     build:
       noarch: python
-
     requirements:
       host:
-        - python {{ python_min }}
+        - python ${{ python_min }}.*
       run:
-        - python >={{ python_min }},<{{ python_over }}
-        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
+        - python >=${{ python_min }},<${{ python_over }}
+        - ${{ pin_subpackage(name, upper_bound='x.x.x.x.x.x') }}
         - pykerberos >=1.1.13
         - requests-kerberos >=0.14.0
         - thrift_sasl >=0.4.2
-
-    test:
-      imports:
-        - airflow
-      commands:
-        - pip check
-      requires:
-        - python {{ python_min }}
-        - pip
-
-  - name: {{ name }}-with-otel
+    tests:
+      - python:
+          imports:
+            - airflow
+          pip_check: true
+          python_version: ${{ python_min }}.*
+  - package:
+      name: ${{ name }}-with-otel
     build:
       noarch: python
-
     requirements:
       host:
-        - python {{ python_min }}
+        - python ${{ python_min }}.*
       run:
-        - python >={{ python_min }},<{{ python_over }}
-        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
+        - python >=${{ python_min }},<${{ python_over }}
+        - ${{ pin_subpackage(name, upper_bound='x.x.x.x.x.x') }}
         # going with more recent versions because of incorrect deps in older versions
         - opentelemetry-exporter-prometheus >=0.51b0
-
-    test:
-      imports:
-        - airflow
-      commands:
-        - pip check
-      requires:
-        - python {{ python_min }}
-        - pip
-
-  - name: {{ name }}-with-sentry
+    tests:
+      - python:
+          imports:
+            - airflow
+          pip_check: true
+          python_version: ${{ python_min }}.*
+  - package:
+      name: ${{ name }}-with-sentry
     build:
       noarch: python
-
     requirements:
       host:
-        - python {{ python_min }}
+        - python ${{ python_min }}.*
       run:
-        - python >={{ python_min }},<{{ python_over }}
-        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
+        - python >=${{ python_min }},<${{ python_over }}
+        - ${{ pin_subpackage(name, upper_bound='x.x.x.x.x.x') }}
         - blinker >=1.1
         - sentry-sdk >=2.30.0
         # sentry-sdk[flask] extra
         - flask >=0.11
         - blinker >=1.1
         - markupsafe
-
-    test:
-      imports:
-        - airflow
-      commands:
-        - pip check
-      requires:
-        - python {{ python_min }}
-        - pip
-
-  - name: {{ name }}-with-statsd
+    tests:
+      - python:
+          imports:
+            - airflow
+          pip_check: true
+          python_version: ${{ python_min }}.*
+  - package:
+      name: ${{ name }}-with-statsd
     build:
       noarch: python
-
     requirements:
       host:
-        - python {{ python_min }}
+        - python ${{ python_min }}.*
       run:
-        - python >={{ python_min }},<{{ python_over }}
-        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
+        - python >=${{ python_min }},<${{ python_over }}
+        - ${{ pin_subpackage(name, upper_bound='x.x.x.x.x.x') }}
         - statsd >=3.3.0
-
-    test:
-      imports:
-        - airflow
-      commands:
-        - pip check
-      requires:
-        - python {{ python_min }}
-        - pip
-
-  - name: {{ name }}-with-all
+    tests:
+      - python:
+          imports:
+            - airflow
+          pip_check: true
+          python_version: ${{ python_min }}.*
+  - package:
+      name: ${{ name }}-with-all
     build:
       noarch: python
-
     requirements:
       host:
-        - python {{ python_min }}
+        - python ${{ python_min }}.*
       run:
-        - python >={{ python_min }},<{{ python_over }}
-        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}
-        - {{ name }}-with-graphviz
-        - {{ name }}-with-kerberos
-        - {{ name }}-with-otel
-        - {{ name }}-with-sentry
-        - {{ name }}-with-statsd
-
-    test:
-      imports:
-        - airflow
-      commands:
-        - pip check
-      requires:
-        - python {{ python_min }}
-        - pip
+        - python >=${{ python_min }},<${{ python_over }}
+        - ${{ pin_subpackage(name, upper_bound='x.x.x.x.x.x') }}
+        - ${{ name }}-with-graphviz
+        - ${{ name }}-with-kerberos
+        - ${{ name }}-with-otel
+        - ${{ name }}-with-sentry
+        - ${{ name }}-with-statsd
+    tests:
+      - python:
+          imports:
+            - airflow
+          pip_check: true
+          python_version: ${{ python_min }}.*
 
 about:
-  home: http://airflow.apache.org
   summary: Core packages for Apache Airflow, schedule and API server
   license: MIT AND BSD-3-Clause AND BSD-2-Clause AND Apache-2.0
   license_file:
     - LICENSE
     - NOTICE
-  doc_url: http://pythonhosted.org/airflow/profiling.html
-  dev_url: https://github.com/apache/airflow
+  homepage: http://airflow.apache.org
+  repository: https://github.com/apache/airflow
+  documentation: http://pythonhosted.org/airflow/profiling.html
 
 extra:
   recipe-maintainers:
