@@ -122,7 +122,6 @@ outputs:
       - requirements:
           run:
             - python ${{ python_min }}.*
-            - pip
             - natsort >=8.4.0
         script:
           - airflow --help
