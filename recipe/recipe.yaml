@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: apache-airflow-core
   version: "3.1.8"
-  python_over: 3.14
+  python_over: "3.14"
 
 recipe:
   name: ${{ name|lower }}-split
