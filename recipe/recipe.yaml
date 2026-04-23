@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: apache-airflow-core
-  version: "3.1.8"
+  version: "3.2.1"
   python_over: "3.14"
 
 recipe:
@@ -11,7 +11,7 @@ recipe:
 
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/apache_airflow_core-${{ version }}.tar.gz
-  sha256: 484aa133b3a8684d64e0bac4f0354938a430bd9e4a7bcc2f142b3e59fc8c2a1c
+  sha256: 737688a2df62b4827419161fccfb6c90e15d5eb4254c06a52014434d354931c1
 
 build:
   number: 0
@@ -40,7 +40,7 @@ outputs:
         - smmap ==5.0.2
         - tomli ==2.4.0
         - trove-classifiers ==2026.1.14.14
-      
+
       run:
         - python >=${{ python_min }},<${{ python_over }}
         - a2wsgi >=1.10.8
